@@ -665,6 +665,43 @@
                 grid-template-columns: 1fr;
             }
         }
+        /* Language Selector Styles */
+.language-selector {
+    display: flex;
+    gap: 5px;
+    margin-left: auto; /* Pushes to the right */
+    padding-right: 15px;
+}
+
+.lang-btn {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    min-width: 40px;
+}
+
+.lang-btn:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+.lang-btn.active {
+    background: var(--accent-color);
+    font-weight: bold;
+}
+
+/* Mobile responsive adjustment */
+@media (max-width: 768px) {
+    .language-selector {
+        margin-left: 0;
+        order: -1; /* Moves before nav in mobile */
+        padding: 10px 0;
+    }
+}
     </style>
 </head>
 <body>
@@ -672,6 +709,11 @@
     <header>
         <div class="container nav-container">
             <a href="index.html" class="logo">Isara <span>Dilnuka</span></a>
+            <div class="language-selector">
+                <button class="lang-btn active" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="si">සිං</button>
+            </div>
+    
             <div class="menu-toggle" id="menuToggle">
                 <span></span>
                 <span></span>
@@ -904,6 +946,77 @@
                 link.classList.add('active');
             }
         });
+        // Language Switching Functionality
+const langButtons = document.querySelectorAll('.lang-btn');
+const languageElements = {
+    en: {
+        title: "Isara Dilnuka - Graphic Designer",
+        heroTitle: "Isara Dilnuka",
+        heroText: "Professional Graphic Designer from Horana, Sri Lanka",
+        heroSubtext: "Specializing in creative visual solutions for YouTube thumbnails, logos, posters, banners, and more",
+        viewPortfolio: "View Portfolio",
+        contactMe: "Contact Me",
+        aboutTitle: "About Me",
+        aboutHeading: "Creative Graphic Designer",
+        aboutText1: "Hello! I'm Isara Dilnuka, a passionate graphic designer...",
+        // Add more English translations as needed
+    },
+    si: {
+        title: "ඉසර දිල්නුක - ග්‍රැෆික් නිර්මාණ ශිල්පී",
+        heroTitle: "ඉසර දිල්නුක",
+        heroText: "හොරණ සිට වෘත්තීය ග්‍රැෆික් නිර්මාණ ශිල්පියෙක්",
+        heroSubtext: "YouTube තුම්බ්නේල්, ලෝගෝ, පෝස්ටර්, බැනර් සහ තවත් බොහෝ දේ සඳහා නිර්මාණාත්මක දෘශ්‍ය විසඳුම් විශේෂඥයා",
+        viewPortfolio: "සංග්‍රහය බලන්න",
+        contactMe: "මාව සම්බන්ධ කරගන්න",
+        aboutTitle: "මා ගැන",
+        aboutHeading: "නිර්මාණාත්මක ග්‍රැෆික් නිර්මාණ ශිල්පී",
+        aboutText1: "ආයුබෝවන්! මම ඉසර දිල්නුක, උද්යෝගිමත් ග්‍රැෆික් නිර්මාණ ශිල්පියෙක්...",
+        // Add more Sinhala translations as needed
+    }
+};
+
+function updateContent(lang) {
+    // Update meta tag
+    document.documentElement.lang = lang;
+    
+    // Update page title
+    document.title = languageElements[lang].title;
+    
+    // Hero section
+    document.querySelector('.hero h1').textContent = languageElements[lang].heroTitle;
+    document.querySelector('.hero p:nth-of-type(1)').textContent = languageElements[lang].heroText;
+    document.querySelector('.hero p:nth-of-type(2)').textContent = languageElements[lang].heroSubtext;
+    document.querySelector('.hero-buttons a:first-child').textContent = languageElements[lang].viewPortfolio;
+    document.querySelector('.hero-buttons a:last-child').textContent = languageElements[lang].contactMe;
+    
+    // About section
+    document.querySelector('.about .section-title h2').textContent = languageElements[lang].aboutTitle;
+    document.querySelector('.about-text h3').textContent = languageElements[lang].aboutHeading;
+    document.querySelector('.about-text p:nth-of-type(1)').textContent = languageElements[lang].aboutText1;
+    
+    // Add more section updates as needed
+}
+
+langButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const lang = btn.dataset.lang;
+        // Update active button
+        langButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // Update page content
+        updateContent(lang);
+        
+        // Store preference
+        localStorage.setItem('preferredLanguage', lang);
+    });
+});
+
+// Check for saved language preference on page load
+document.addEventListener('DOMContentLoaded', () => {
+    const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+    document.querySelector(`.lang-btn[data-lang="${savedLang}"]`).click();
+});
     </script>
 </body>
 </html>
