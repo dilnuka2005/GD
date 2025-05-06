@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isara Dilnuka - Graphic Designer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary-color: #03045e;
+            --secondary-color: #0077b6;
+            --accent-color: #00b4d8;
+            --light-color: #caf0f8;
+            --dark-color: #020024;
+            --white-color: #ffffff;
+            --gray-color: #f8f9fa;
+            --text-color: #333333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--gray-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+            padding: 10px 25px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white-color);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--white-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--accent-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            color: var(--white-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--light-color);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            width: 0;
+            height: 2px;
+            background-color: var(--light-color);
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+        }
+        
+        .menu-toggle span {
+            height: 3px;
+            width: 100%;
+            background-color: var(--white-color);
+            border-radius: 3px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 150px 0 100px;
+            background: linear-gradient(rgba(3, 4, 94, 0.8), rgba(0, 119, 182, 0.8)), url('/api/placeholder/1200/800') center/cover no-repeat;
+            color: var(--white-color);
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .hero-buttons .btn-secondary {
+            background-color: transparent;
+            border: 2px solid var(--white-color);
+        }
+        
+        .hero-buttons .btn-secondary:hover {
+            background-color: var(--white-color);
+            color: var(--primary-color);
+        }
+        
+        /* About Section */
+        .about {
+            padding: 100px 0;
+            background-color: var(--white-color);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+        
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+        
+        .about-text p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+        
+        .skills {
+            margin-top: 30px;
+        }
+        
+        .skills h4 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+        
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .skill-item {
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        /* Services Section Preview */
+        .services-preview {
+            padding: 80px 0;
+            background-color: var(--gray-color);
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background-color: var(--white-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .service-icon {
+            height: 70px;
+            width: 70px;
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 30px auto 20px;
+            font-size: 1.8rem;
+        }
+        
+        .service-card h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+        }
+        
+        .service-card p {
+            padding: 0 20px 30px;
+            text-align: center;
+            color: var(--text-color);
+            font-size: 0.95rem;
+        }
+        
+        /* Portfolio Preview */
+        .portfolio-preview {
+            padding: 100px 0;
+            background-color: var(--white-color);
+        }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .portfolio-item {
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .portfolio-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(3, 4, 94, 0.9), rgba(0, 119, 182, 0.3));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .portfolio-item:hover .portfolio-image {
+            transform: scale(1.1);
+        }
+        
+        .portfolio-overlay h3 {
+            color: var(--white-color);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .portfolio-overlay p {
+            color: var(--light-color);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .portfolio-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .portfolio-btn {
+            background-color: var(--white-color);
+            color: var(--primary-color);
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .portfolio-btn:hover {
+            background-color: var(--accent-color);
+            color: var(--white-color);
+        }
+        
+        .view-all {
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        /* CTA Section */
+        .cta {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white-color);
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: var(--white-color);
+            padding: 60px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        
+        .footer-logo span {
+            color: var(--accent-color);
+        }
+        
+        .footer-about p {
+            margin-bottom: 20px;
+            color: #ccc;
+            font-size: 0.95rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-link {
+            height: 40px;
+            width: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-5px);
+        }
+        
+        .footer-title {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent-color);
+            bottom: -10px;
+            left: 0;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-links ul li a i {
+            margin-right: 10px;
+            font-size: 0.85rem;
+            color: var(--accent-color);
+        }
+        
+        .footer-links ul li a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+        
+        .contact-info div {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .contact-info i {
+            margin-right: 15px;
+            color: var(--accent-color);
+            font-size: 1.1rem;
+            margin-top: 5px;
+        }
+        
+        .contact-info p {
+            color: #ccc;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #999;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 991px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-image {
+                margin-bottom: 30px;
+                max-width: 500px;
+                width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                position: relative;
+            }
+            
+            .menu-toggle {
+                display: flex;
+            }
+            
+            nav ul {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--primary-color);
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                transform: translateY(-200%);
+                opacity: 0;
+                transition: all 0.5s ease;
+            }
+            
+            nav ul.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            
+            nav ul li {
+                margin: 15px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .hero-buttons .btn {
+                width: 200px;
+                margin: 0 auto;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">Isara <span>Dilnuka</span></a>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="feedback.html">Feedback</a></li>
+                    <li><a href="contact.html">contact</a></li>
+                    
+                  
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Isara Dilnuka</h1>
+                <p>Professional Graphic Designer from Horana, Sri Lanka</p>
+                <p>Specializing in creative visual solutions for YouTube thumbnails, logos, posters, banners, and more</p>
+                <div class="hero-buttons">
+                    <a href="gallery.html" class="btn">View Portfolio</a>
+                    <a href="contact.html" class="btn btn-secondary">Contact Me</a>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Me</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="data:image/jpeg;base64,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" alt="Isara Dilnuka">
+                </div>
+                <div class="about-text">
+                    <h3>Creative Graphic Designer</h3>
+                    <p>Hello! I'm Isara Dilnuka, a passionate graphic designer from Horana, Sri Lanka. I specialize in creating eye-catching visual content that helps brands and individuals stand out in today's digital landscape.</p>
+                    <p>With years of experience in the field, I've developed a keen eye for design and a deep understanding of what makes visual content effective. I believe in the power of good design to communicate messages and evoke emotions.</p>
+                    <p>Being from Sri Lanka, I bring a unique cultural perspective to my work, combining modern design trends with rich Sinhala artistic influences.</p>
+                    <div class="skills">
+                        <h4>My Design Skills</h4>
+                        <div class="skill-list">
+                            <span class="skill-item">Logo Design</span>
+                            <span class="skill-item">YouTube Thumbnails</span>
+                            <span class="skill-item">Poster Design</span>
+                            <span class="skill-item">Banner Creation</span>
+                            <span class="skill-item">Brand Identity</span>
+                            <span class="skill-item">Social Media Graphics</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Preview Section -->
+    <section class="services-preview">
+        <div class="container">
+            <div class="section-title">
+                <h2>My Services</h2>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <h3>YouTube Thumbnails</h3>
+                    <p>Eye-catching thumbnails that increase click-through rates and help your videos stand out on YouTube.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3>Logo Design</h3>
+                    <p>Unique and memorable logos that capture the essence of your brand and help build recognition.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-ad"></i>
+                    </div>
+                    <h3>Poster & Banner Design</h3>
+                    <p>Striking posters and banners for events, promotions, or advertising campaigns.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Preview Section -->
+    <section class="portfolio-preview">
+        <div class="container">
+            <div class="section-title">
+                <h2>Featured Works</h2>
+            </div>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <img src="/api/placeholder/600/400" alt="YouTube Thumbnail" class="portfolio-image">
+                    <div class="portfolio-overlay">
+                        <h3>YouTube Thumbnail</h3>
+                        <p>Eye-catching thumbnail design for a tech review channel</p>
+                        <div class="portfolio-buttons">
+                            <a href="gallery.html" class="portfolio-btn">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="/api/placeholder/600/400" alt="Logo Design" class="portfolio-image">
+                    <div class="portfolio-overlay">
+                        <h3>Logo Design</h3>
+                        <p>Modern logo created for a local business</p>
+                        <div class="portfolio-buttons">
+                            <a href="gallery.html" class="portfolio-btn">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="/api/placeholder/600/400" alt="Event Poster" class="portfolio-image">
+                    <div class="portfolio-overlay">
+                        <h3>Event Poster</h3>
+                        <p>Promotional poster design for a cultural event</p>
+                        <div class="portfolio-buttons">
+                            <a href="gallery.html" class="portfolio-btn">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="view-all">
+                <a href="gallery.html" class="btn">View All Works</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Let's Work Together</h2>
+            <p>Have a project in mind? I'm available for freelance work and collaborations.</p>
+            <a href="contact.html" class="btn">Get In Touch</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+  <!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-about">
+                <a href="index.html" class="footer-logo">Isara <span>Dilnuka</span></a>
+                <p>Professional graphic designer specializing in YouTube thumbnails, logos, posters, and banners. Based in Horana, Sri Lanka.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/Dilnuka.13x" class="social-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/dilnuka.13x/" class="social-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                    <a href="https://api.whatsapp.com/send?phone=94716155666" class="social-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.youtube.com/channel/UC6dd601bYXS5lMI6HiJjy7Q" class="social-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.tiktok.com/@dilnuka.13x?is_from_webapp=1&sender_device=pc" class="social-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4 class="footer-title">Quick Links</h4>
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-angle-right"></i> Home</a></li>
+                    <li><a href="gallery.html"><i class="fas fa-angle-right"></i> Gallery</a></li>
+                    <li><a href="feedback.html"><i class="fas fa-angle-right"></i> Feedback</a></li>
+                    <li><a href="contact.html"><i class="fas fa-angle-right"></i> Contact</a></li>
+                </ul>
+            </div>
+            <div class="contact-info">
+                <h4 class="footer-title">Contact Info</h4>
+                <div>
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>Dikhengama, Munagama, Horana, 12400, Sri Lanka</p>
+                </div>
+                <div>
+                    <i class="fas fa-phone-alt"></i>
+                    <p>0716155666</p>
+                </div>
+                <div>
+                    <i class="fas fa-envelope"></i>
+                    <p>isaradilnuka513@gmail.com</p>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Isara Dilnuka. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+        
+        // Close menu when clicking on a link
+        const navLinks = document.querySelectorAll('nav ul li a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const isNavMenu = e.target.closest('nav');
+            const isMenuToggle = e.target.closest('#menuToggle');
+            
+            if (!isNavMenu && !isMenuToggle && navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+            }
+        });
+        
+        // Active Nav Link
+        const currentLocation = location.href;
+        navLinks.forEach(link => {
+            if (link.href === currentLocation) {
+                link.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

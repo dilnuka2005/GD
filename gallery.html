@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Isara Dilnuka</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary-color: #03045e;
+            --secondary-color: #0077b6;
+            --accent-color: #00b4d8;
+            --light-color: #caf0f8;
+            --dark-color: #020024;
+            --white-color: #ffffff;
+            --gray-color: #f8f9fa;
+            --text-color: #333333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--gray-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+            padding: 10px 25px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white-color);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--white-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--accent-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            color: var(--white-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--light-color);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            width: 0;
+            height: 2px;
+            background-color: var(--light-color);
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+        }
+        
+        .menu-toggle span {
+            height: 3px;
+            width: 100%;
+            background-color: var(--white-color);
+            border-radius: 3px;
+        }
+        
+        /* Page Header */
+        .page-header {
+            padding: 150px 0 80px;
+            background: linear-gradient(rgba(3, 4, 94, 0.8), rgba(0, 119, 182, 0.8)), url('/api/placeholder/1200/400') center/cover no-repeat;
+            color: var(--white-color);
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .breadcrumb a {
+            color: var(--light-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--white-color);
+        }
+        
+        .breadcrumb .separator {
+            color: var(--light-color);
+        }
+        
+        .breadcrumb .current {
+            color: var(--white-color);
+            font-weight: 600;
+        }
+        
+        /* Gallery Section */
+        .gallery-section {
+            padding: 80px 0;
+        }
+        
+        .gallery-filter {
+            margin-bottom: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .filter-btn {
+            padding: 8px 20px;
+            background-color: var(--white-color);
+            color: var(--primary-color);
+            border: 2px solid var(--light-color);
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            border-color: var(--primary-color);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .gallery-item {
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            height: 300px;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(3, 4, 94, 0.9), rgba(0, 119, 182, 0.3));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.5s ease;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        .gallery-overlay h3 {
+            color: var(--white-color);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .gallery-overlay p {
+            color: var(--light-color);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .gallery-btn {
+            background-color: var(--white-color);
+            color: var(--primary-color);
+            padding: 8px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-btn:hover {
+            background-color: var(--accent-color);
+            color: var(--white-color);
+        }
+        
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        
+        .lightbox.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .lightbox-content {
+            position: relative;
+            max-width: 80%;
+            max-height: 80%;
+        }
+        
+        .lightbox-img {
+            display: block;
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 5px;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            font-size: 2rem;
+            color: var(--white-color);
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .lightbox-close:hover {
+            color: var(--accent-color);
+        }
+        
+        .lightbox-caption {
+            position: absolute;
+            bottom: -40px;
+            left: 0;
+            width: 100%;
+            color: var(--white-color);
+            text-align: center;
+            font-size: 1rem;
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            transform: translateY(-50%);
+        }
+        
+        .lightbox-nav button {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--white-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .lightbox-nav button:hover {
+            color: var(--accent-color);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: var(--white-color);
+            padding: 60px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        
+        .footer-logo span {
+            color: var(--accent-color);
+        }
+        
+        .footer-about p {
+            margin-bottom: 20px;
+            color: #ccc;
+            font-size: 0.95rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-link {
+            height: 40px;
+            width: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-5px);
+        }
+        
+        .footer-title {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent-color);
+            bottom: -10px;
+            left: 0;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-links ul li a i {
+            margin-right: 10px;
+            font-size: 0.85rem;
+            color: var(--accent-color);
+        }
+        
+        .footer-links ul li a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+        
+        .contact-info div {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .contact-info i {
+            margin-right: 15px;
+            color: var(--accent-color);
+            font-size: 1.1rem;
+            margin-top: 5px;
+        }
+        
+        .contact-info p {
+            color: #ccc;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #999;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 991px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                position: relative;
+            }
+            
+            .menu-toggle {
+                display: flex;
+            }
+            
+            nav ul {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--primary-color);
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                transform: translateY(-200%);
+                opacity: 0;
+                transition: all 0.5s ease;
+            }
+            
+            nav ul.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            
+            nav ul li {
+                margin: 15px 0;
+            }
+            
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .gallery-filter {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .filter-btn {
+                width: 80%;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">Isara <span>Dilnuka</span></a>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="gallery.html" class="active">Gallery</a></li>
+                    <li><a href="feedback.html">Feedback</a></li>
+                    <li><a href="contact.html">contact</a></li>
+                 
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>My Portfolio Gallery</h1>
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span class="separator"><i class="fas fa-angle-right"></i></span>
+                <span class="current">Gallery</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+        <div class="container">
+            <div class="gallery-filter">
+                <button class="filter-btn active" data-filter="all">All Works</button>
+                <button class="filter-btn" data-filter="thumbnails">YouTube Thumbnails</button>
+                <button class="filter-btn" data-filter="banners">Banners</button>
+                <button class="filter-btn" data-filter="logos">Logos</button>
+                <button class="filter-btn" data-filter="posters">Posters</button>
+            </div>
+            
+            <div class="gallery-grid">
+                <!-- YouTube Thumbnails -->
+                <div class="gallery-item" data-category="thumbnails">
+                    <img src="/api/placeholder/600/600" alt="Tech Review Thumbnail" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <h3>Tech Review Thumbnail</h3>
+                        <p>Eye-catching YouTube thumbnail design for tech review channel</p>
+                        <button class="gallery-btn view-image" data-src="/api/placeholder/600/600" data-caption="Tech Review Thumbnail">View Larger</button>
+                    </div>
+                </div>
+                
+                <div class="gallery-item" data-category="thumbnails">
+                    <img src="/api/placeholder/600/600" alt="Gaming Thumbnail" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <h3>Gaming Thumbnail</h3>
+                        <p>Dynamic YouTube thumbnail for gaming content</p>
+                        <button class="gallery-btn view-image" data-src="/api/placeholder/600/600" data-caption="Gaming Thumbnail">View Larger</button>
+                    </div>
+                </div>
+                
+                <div class="gallery-item" data-category="thumbnails">
+                    <img src="/api/placeholder/600/600" alt="Tutorial Thumbnail" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <h3>Tutorial Thumbnail</h3>
+                        <p>Clear and informative thumbnail for educational content</p>
+                        <button class="gallery-btn view-image" data-src="/api/placeholder/600/600" data-caption="Tutorial Thumbnail">View Larger</button>
+                    </div>
+                </div>
+                
+                <!-- Logos -->
+                <div class="gallery-item" data-category="logos">
+                    <img src="/api/placeholder/600/600" alt="Restaurant Logo" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <h3>Restaurant Logo</h3>
+                        <p>Modern and elegant logo design for a local restaurant</p>
+                        <button class="gallery-btn view-image" data-src="/api/placeholder/600/600" data-caption="Restaurant Logo">View Larger</button>
+                    </div>
+                </div>
+                
+                <div class="gallery-item" data-category="logos">
+                    <img src="/api/placeholder/600/600" alt="Tech Startup Logo" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <h3>Tech Startup Logo</h3>
+                        <p>Minimalist and innovative logo for a technology startup</p>
+                        <button class="gallery-btn view-image" data-src="/api/placeholder/600/600" data-caption="Tech Startup Logo">View Larger</button>
+                    </div>
+                </div>
+                
+                <div class="gallery-item" data-category="logos">
+                    <img src="/api/placeholder/600/600" alt="Fashion Brand Logo" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <h3>Fashion Brand Logo</h3>
+                        <p>Stylish and trendy logo for a clothing brand</p>
+                        <button class="gallery-btn view-image" data-src="/api/placeholder/600/600" data-caption="Fashion Brand Logo">View Larger</button>
+                    </div>
+                </div>
+                
+                <!-- Posters -->
+                <div class="gallery-item" data-category="posters">
+                    <img src="/api/placeholder/600/600" alt="Cultural Event Poster" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <h3>Cultural Event Poster</h3>
+                        <p>Vibrant poster design for a local cultural festival</p>
+                        <button class="gallery-btn view-image" data-src="/api/placeholder/600/600" data-caption="Cultural Event Poster">View Larger</button>
+                    </div>
+                </div>
+                
+                <div class="gallery-item" data-category="posters">
+                    <img src="/api/placeholder/600/600" alt="Music Concert Poster" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <h3>Music Concert Poster</h3>
+                        <p>Dynamic poster design for a music concert</p>
+                        <button class="gallery-btn view-image" data-src="/api/placeholder/600/600" data-caption="Music Concert Poster">View Larger</button>
+                    </div>
+                </div>
+                
+                <div class="gallery-item" data-category="posters">
+                    <img src="/api/placeholder/600/600" alt="Movie Poster" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <h3>Movie Poster</h3>
+                        <p>Dramatic poster design for an independent film</p>
+                        <button class="gallery-btn view-image" data-src="/api/placeholder/600/600" data-caption="Movie Poster">View Larger</button>
+                    </div>
+                </div>
+                
+                <!-- Banners -->
+                <div class="gallery-item" data-category="banners">
+                    <img src="/api/placeholder/600/600" alt="Web Banner" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <h3>Web Banner</h3>
+                        <p>Clean and professional web banner for e-commerce site</p>
+                        <button class="gallery-btn view-image" data-src="/api/placeholder/600/600" data-caption="Web Banner">View Larger</button>
+                    </div>
+                </div>
+                
+                <div class="gallery-item" data-category="banners">
+                    <img src="/api/placeholder/600/600" alt="Social Media Banner" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <h3>Social Media Banner</h3>
+                        <p>Engaging social media banner for brand promotion</p>
+                        <button class="gallery-btn view-image" data-src="/api/placeholder/600/600" data-caption="Social Media Banner">View Larger</button>
+                    </div>
+                </div>
+                
+                <div class="gallery-item" data-category="banners">
+                    <img src="/api/placeholder/600/600" alt="Event Banner" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <h3>Event Banner</h3>
+                        <p>Attractive banner design for a corporate event</p>
+                        <button class="gallery-btn view-image" data-src="/api/placeholder/600/600" data-caption="Event Banner">View Larger</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" id="lightboxClose"><i class="fas fa-times"></i></button>
+            <img src="" alt="" class="lightbox-img" id="lightboxImg">
+            <div class="lightbox-caption" id="lightboxCaption"></div>
+            <div class="lightbox-nav">
+                <button id="prevButton"><i class="fas fa-chevron-left"></i></button>
+                <button id="nextButton"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <a href="index.html" class="footer-logo">Isara <span>Dilnuka</span></a>
+                    <p>Professional graphic designer specializing in YouTube thumbnails, logos, posters, and banners. Based in Horana, Sri Lanka.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/Dilnuka.13x" class="social-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/dilnuka.13x/" class="social-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                        <a href="https://api.whatsapp.com/send?phone=94716155666" class="social-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.youtube.com/channel/UC6dd601bYXS5lMI6HiJjy7Q" class="social-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.tiktok.com/@dilnuka.13x?is_from_webapp=1&sender_device=pc" class="social-link" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-angle-right"></i> Home</a></li>
+                        <li><a href="gallery.html"><i class="fas fa-angle-right"></i> Gallery</a></li>
+                        <li><a href="feedback.html"><i class="fas fa-angle-right"></i> Feedback</a></li>
+                        <li><a href="contact.html"><i class="fas fa-angle-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+                <div class="contact-info">
+                    <h4 class="footer-title">Contact Info</h4>
+                    <div>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>Dikhengama, Munagama, Horana, 12400, Sri Lanka</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-phone-alt"></i>
+                        <p>0716155666</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-envelope"></i>
+                        <p>isaradilnuka513@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Isara Dilnuka. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+        
+        // Close menu when clicking on a link
+        const navLinks = document.querySelectorAll('nav ul li a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const isNavMenu = e.target.closest('nav');
+            const isMenuToggle = e.target.closest('#menuToggle');
+            
+            if (!isNavMenu && !isMenuToggle && navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+            }
+        });
+        
+        // Gallery Filtering
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                const filter = button.getAttribute('data-filter');
+                
+                galleryItems.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Lightbox
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxCaption = document.getElementById('lightboxCaption');
+        const lightboxClose = document.getElementById('lightboxClose');
+        const prevButton = document.getElementById('prevButton');
+        const nextButton = document.getElementById('nextButton');
+        const viewButtons = document.querySelectorAll('.view-image');
+        
+        let currentIndex = 0;
+        const galleryImages = [];
+        
+        // Collect all gallery images data
+        viewButtons.forEach(button => {
+            galleryImages.push({
+                src: button.getAttribute('data-src'),
+                caption: button.getAttribute('data-caption')
+            });
+        });
+        
+        // Open lightbox when clicking on view button
+        viewButtons.
+        <script>
+    // Gallery Filtering
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Add active class to clicked button
+            button.classList.add('active');
+            
+            const filter = button.getAttribute('data-filter');
+            
+            galleryItems.forEach(item => {
+                if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                    item.style.display = 'block';
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.transform = 'scale(1)';
+                    }, 50);
+                } else {
+                    item.style.opacity = '0';
+                    item.style.transform = 'scale(0.8)';
+                    setTimeout(() => {
+                        item.style.display = 'none';
+                    }, 300);
+                }
+            });
+        });
+    });
+</script>
